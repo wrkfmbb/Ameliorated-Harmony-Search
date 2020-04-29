@@ -1,0 +1,34 @@
+﻿<Window x:Class="ImprovedHarmonySearch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImprovedHarmonySearch"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Height="22" Margin="23,24,0,0" TextWrapping="Wrap" Text="Objective function f(x):" VerticalAlignment="Top" Width="267"/>
+        <TextBox Margin="23,46,502,344" Text="sin(x1)+x2(exp(25)) " Name="objectiveFunction" RenderTransformOrigin="0.5,-1.464" LostFocus="lostFocusOnObjFunc" />
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="23,74,0,0" TextWrapping="Wrap" Text="Detected variables: " VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.494,3.227"/>
+        <TextBlock HorizontalAlignment="Left" Height="29" Margin="129,74,0,0" TextWrapping="Wrap" Name="detectedVar" VerticalAlignment="Top" Width="161"/>
+        <TextBlock HorizontalAlignment="Left" Margin="42,112,0,0" TextWrapping="Wrap" Text="ParMin:" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="99,106,0,0" TextWrapping="Wrap" Name="parMin" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="42,146,0,0" TextWrapping="Wrap" Text="ParMax:" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="99,140,0,0" TextWrapping="Wrap" Name="parMax" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="162,118,0,0" TextWrapping="Wrap" Text="bwMin:" VerticalAlignment="Top" Width="41"/>
+        <TextBox HorizontalAlignment="Left" Margin="218,111,0,0" TextWrapping="Wrap" Name="bwMin" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="160,148,0,0" TextWrapping="Wrap" Text="bwMax:" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="218,142,0,0" TextWrapping="Wrap" Name="bwMax" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="67,179,0,0" TextWrapping="Wrap" Text="NI:" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="99,175,0,0" TextWrapping="Wrap" Name="NI" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="164,179,0,0" TextWrapping="Wrap" Text="HMCR:" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="219,175,0,0" TextWrapping="Wrap" Name="HMCR" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="172,214,0,0" TextWrapping="Wrap" Text="HMS:" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="219,209,0,0" TextWrapping="Wrap" Name="HMS" VerticalAlignment="Top" Width="42" Height="28"/>
+
+        <Button RenderTransformOrigin="0.509,-2.222" Margin="23,252,502,140" Click="SearchHarmony">Count</Button>
+        <TextBlock Margin="23,313,502,85" Text="Results:" />
+        <TextBlock Margin="23,337,502,18" Text="" Name ="result" />
+
+    </Grid>
+</Window>
