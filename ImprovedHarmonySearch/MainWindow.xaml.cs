@@ -30,6 +30,14 @@ namespace ImprovedHarmonySearch
         org.mariuszgromada.math.mxparser.Expression ex; //wyrazenie do obliczenia
         List<string> variableNames; //lista nazw zmiennych 
 
+        //parameters of algorithm 
+        double hmcr;
+        double parMIN;
+        double parMAX;
+        double bwMIN;
+        double bwMAX;
+        int NI;
+        int HMS;
 
         public MainWindow()
         {
@@ -47,6 +55,13 @@ namespace ImprovedHarmonySearch
             //                 rndG[i] = rand.NextDouble()*(2-(-2)) - 2; //nextdouble to z uniform 
             //}
 
+            hmcr = double.Parse(HMCR.Text);
+            parMIN = double.Parse(parMin.Text);
+            parMAX = double.Parse(parMax.Text);
+            bwMIN = double.Parse(bwMin.Text);
+            bwMIN = double.Parse(bwMax.Text);
+            NI = int.Parse(Ni.Text);
+            HMS = int.Parse(hms.Text); 
         }
 
         private void lostFocusOnObjFunc(object sender, RoutedEventArgs e)
@@ -54,7 +69,8 @@ namespace ImprovedHarmonySearch
             var expression = objectiveFunction.Text;
             detectedVar.Text = string.Empty;
             variableNames = new List<string>(); //list of variables name 
-
+            XScopeWindow window = new XScopeWindow();
+            
             //wyszukanie liczby zmiennych n <= 5 z załozenia od pani Doktor 
             for (int i = 1; i < n + 1; i++)
             {
@@ -72,6 +88,10 @@ namespace ImprovedHarmonySearch
             double[] db = new double[2] { 1,5};
 
             result.Text = $"{CalculateObjectiveFunc(db)}";
+
+           
+            window.Show();
+            
         }
 
 

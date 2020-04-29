@@ -1,0 +1,33 @@
+﻿<Window x:Class="ImprovedHarmonySearch.XScopeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImprovedHarmonySearch"
+        mc:Ignorable="d"
+        Title="XScopeWindow" Height="450" Width="800">
+    <Grid>
+
+        <TextBlock HorizontalAlignment="Left" Margin="98,132,0,0" TextWrapping="Wrap" Text="x1min" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="99,159,0,0" TextWrapping="Wrap" Text="x2min" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="98,189,0,0" TextWrapping="Wrap" Text="x3min" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="99,217,0,0" TextWrapping="Wrap" Text="x4min" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="99,240,0,0" TextWrapping="Wrap" Text="x5min" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="150,131,0,0"  Name ="x1min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="150,157,0,0" Name ="x2min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="150,182,0,0" Name ="x3min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="150,208,0,0" Name ="x4min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="150,233,0,0" Name ="x5min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="456,132,0,0" TextWrapping="Wrap" Text="x1max" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="457,159,0,0" TextWrapping="Wrap" Text="x2max" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="456,189,0,0" TextWrapping="Wrap" Text="x3max" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="457,217,0,0" TextWrapping="Wrap" Text="x4max" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="457,240,0,0" TextWrapping="Wrap" Text="x5max" VerticalAlignment="Top" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="510,131,0,0" Name ="x1max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="510,157,0,0" Name ="x2max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="510,182,0,0" Name ="x3max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="510,208,0,0" Name ="x4max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="510,233,0,0" Name ="x5max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="339,329,0,0" Name ="x6max" VerticalAlignment="Top" Width="114" Height="35"/>
+    </Grid>
+</Window>

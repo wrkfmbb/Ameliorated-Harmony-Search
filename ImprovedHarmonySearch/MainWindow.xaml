@@ -20,11 +20,11 @@
         <TextBlock HorizontalAlignment="Left" Margin="160,148,0,0" TextWrapping="Wrap" Text="bwMax:" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="218,142,0,0" TextWrapping="Wrap" Name="bwMax" VerticalAlignment="Top" Width="42" Height="28"/>
         <TextBlock HorizontalAlignment="Left" Margin="67,179,0,0" TextWrapping="Wrap" Text="NI:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="99,175,0,0" TextWrapping="Wrap" Name="NI" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="99,175,0,0" TextWrapping="Wrap" Name="Ni" VerticalAlignment="Top" Width="42" Height="28"/>
         <TextBlock HorizontalAlignment="Left" Margin="164,179,0,0" TextWrapping="Wrap" Text="HMCR:" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="219,175,0,0" TextWrapping="Wrap" Name="HMCR" VerticalAlignment="Top" Width="42" Height="28"/>
         <TextBlock HorizontalAlignment="Left" Margin="172,214,0,0" TextWrapping="Wrap" Text="HMS:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="219,209,0,0" TextWrapping="Wrap" Name="HMS" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="219,209,0,0" TextWrapping="Wrap" Name="hms" VerticalAlignment="Top" Width="42" Height="28"/>
 
         <Button RenderTransformOrigin="0.509,-2.222" Margin="23,252,502,140" Click="SearchHarmony">Count</Button>
         <TextBlock Margin="23,313,502,85" Text="Results:" />
