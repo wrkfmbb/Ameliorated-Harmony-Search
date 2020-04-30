@@ -8,27 +8,47 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Height="22" Margin="23,24,0,0" TextWrapping="Wrap" Text="Objective function f(x):" VerticalAlignment="Top" Width="267"/>
-        <TextBox Margin="23,46,502,344" Text="sin(x1)+x2(exp(25)) " Name="objectiveFunction" RenderTransformOrigin="0.5,-1.464" LostFocus="lostFocusOnObjFunc" />
+        <TextBox Margin="23,46,502,344" Text="x1+x2" Name="objectiveFunction" RenderTransformOrigin="0.5,-1.464" LostFocus="lostFocusOnObjFunc"  />
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="23,74,0,0" TextWrapping="Wrap" Text="Detected variables: " VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.494,3.227"/>
         <TextBlock HorizontalAlignment="Left" Height="29" Margin="129,74,0,0" TextWrapping="Wrap" Name="detectedVar" VerticalAlignment="Top" Width="161"/>
         <TextBlock HorizontalAlignment="Left" Margin="42,112,0,0" TextWrapping="Wrap" Text="ParMin:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="99,106,0,0" TextWrapping="Wrap" Name="parMin" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="99,106,0,0" TextWrapping="Wrap" Name="parMin" VerticalAlignment="Top" Width="42" Height="28" Text="0.01"/>
         <TextBlock HorizontalAlignment="Left" Margin="42,146,0,0" TextWrapping="Wrap" Text="ParMax:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="99,140,0,0" TextWrapping="Wrap" Name="parMax" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="99,140,0,0" TextWrapping="Wrap" Name="parMax" VerticalAlignment="Top" Width="42" Height="28" Text="0.45"/>
         <TextBlock HorizontalAlignment="Left" Margin="162,118,0,0" TextWrapping="Wrap" Text="bwMin:" VerticalAlignment="Top" Width="41"/>
-        <TextBox HorizontalAlignment="Left" Margin="218,111,0,0" TextWrapping="Wrap" Name="bwMin" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="218,111,0,0" TextWrapping="Wrap" Name="bwMin" VerticalAlignment="Top" Width="42" Height="28" Text="0.001"/>
         <TextBlock HorizontalAlignment="Left" Margin="160,148,0,0" TextWrapping="Wrap" Text="bwMax:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="218,142,0,0" TextWrapping="Wrap" Name="bwMax" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="218,142,0,0" TextWrapping="Wrap" Name="bwMax" VerticalAlignment="Top" Width="42" Height="28" Text="0.1"/>
         <TextBlock HorizontalAlignment="Left" Margin="67,179,0,0" TextWrapping="Wrap" Text="NI:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="99,175,0,0" TextWrapping="Wrap" Name="Ni" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="99,175,0,0" TextWrapping="Wrap" Name="Ni" VerticalAlignment="Top" Width="42" Height="28" Text="10"/>
         <TextBlock HorizontalAlignment="Left" Margin="164,179,0,0" TextWrapping="Wrap" Text="HMCR:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="219,175,0,0" TextWrapping="Wrap" Name="HMCR" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="219,175,0,0" TextWrapping="Wrap" Name="HMCR" VerticalAlignment="Top" Width="42" Height="28" Text="0.98"/>
         <TextBlock HorizontalAlignment="Left" Margin="172,214,0,0" TextWrapping="Wrap" Text="HMS:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="219,209,0,0" TextWrapping="Wrap" Name="hms" VerticalAlignment="Top" Width="42" Height="28"/>
+        <TextBox HorizontalAlignment="Left" Margin="219,209,0,0" TextWrapping="Wrap" Name="hms" VerticalAlignment="Top" Width="42" Height="28" Text="3"/>
 
         <Button RenderTransformOrigin="0.509,-2.222" Margin="23,252,502,140" Click="SearchHarmony">Count</Button>
         <TextBlock Margin="23,313,502,85" Text="Results:" />
         <TextBlock Margin="23,337,502,18" Text="" Name ="result" />
+        <TextBlock HorizontalAlignment="Left" Margin="313,105,0,0" TextWrapping="Wrap" Text="x1min" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="314,132,0,0" TextWrapping="Wrap" Text="x2min" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="313,162,0,0" TextWrapping="Wrap" Text="x3min" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="314,190,0,0" TextWrapping="Wrap" Text="x4min" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="314,213,0,0" TextWrapping="Wrap" Text="x5min" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="365,104,0,0"  x:Name ="x1min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="365,130,0,0" x:Name ="x2min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="3"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="365,155,0,0" x:Name ="x3min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="365,181,0,0" x:Name ="x4min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="365,206,0,0" x:Name ="x5min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBlock HorizontalAlignment="Left" Margin="504,105,0,0" TextWrapping="Wrap" Text="x1max" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="505,132,0,0" TextWrapping="Wrap" Text="x2max" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="504,162,0,0" TextWrapping="Wrap" Text="x3max" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="505,190,0,0" TextWrapping="Wrap" Text="x4max" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="505,213,0,0" TextWrapping="Wrap" Text="x5max" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="558,104,0,0" x:Name ="x1max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="558,130,0,0" x:Name ="x2max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="4" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="558,155,0,0" x:Name ="x3max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="558,181,0,0" x:Name ="x4max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="558,206,0,0" x:Name ="x5max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
 
     </Grid>
 </Window>
