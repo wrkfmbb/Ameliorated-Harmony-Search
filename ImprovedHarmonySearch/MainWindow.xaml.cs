@@ -86,9 +86,11 @@ namespace ImprovedHarmonySearch
 
                     HM[HMS - 1] = newHarmonyVec; //wstawienie nowego wektora rozwiązań na najgorsze rozwiązanie
                     SortByFx(); //posortuj wg wartosci funkcji celu 
-                    
+                   
                 }
             }
+
+            result.Text = $"f = {HM[0][variablesCount]}, x1 = {HM[0][0]}, x2 = {HM[0][1]}";
 
         }
 
@@ -113,7 +115,7 @@ namespace ImprovedHarmonySearch
             {
                 double.Parse(x1min.Text),
                 double.Parse(x2min.Text),
-                // double.Parse(x3min.Text) itp dla n > 2 
+               // double.Parse(x3min.Text)// itp dla n > 2 
             };
 
             xU = new double[]
@@ -121,7 +123,7 @@ namespace ImprovedHarmonySearch
 
                 double.Parse(x1max.Text),
                 double.Parse(x2max.Text),
-                // double.Parse(x3min.Text) itp dla n > 2 
+               // double.Parse(x3min.Text) //itp dla n > 2 
             };
         }
 
@@ -148,7 +150,6 @@ namespace ImprovedHarmonySearch
 
                 }
             }
-
 
             return HM;
         }
@@ -220,7 +221,7 @@ namespace ImprovedHarmonySearch
                 {
                     //YES
                     D1 = (int)(rand.NextDouble() * HMS) + 1;
-                    D2 = HM[D1][i];
+                    D2 = HM[D1-1][i];
                     NHV[i] = D2;
 
 
@@ -275,6 +276,7 @@ namespace ImprovedHarmonySearch
         {
             var expression = objectiveFunction.Text;
             detectedVar.Text = string.Empty;
+            variablesCount = 0; 
             variableNames = new List<string>(); //list of variables name 
                                                 //  XScopeWindow window = new XScopeWindow();
 
