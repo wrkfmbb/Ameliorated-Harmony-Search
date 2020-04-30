@@ -14,8 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
-using System.Globalization;
-using System.Threading;
+
 
 
 
@@ -51,8 +50,7 @@ namespace ImprovedHarmonySearch
         double[] xL;
         double[] xU;
         double[][] HM;
-        double[] fValue;
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -63,11 +61,8 @@ namespace ImprovedHarmonySearch
             InitializeParameters();
             HM = InitializeHM();
             ResizeHarmonyMemoryAddFx();
-
             SortByFx(); 
-           // fValue = InitializeFxValue();
-           //  SortTwoArrays(HM, fValue); 
-
+           
         }
 
         private void InitializeParameters()
@@ -106,7 +101,6 @@ namespace ImprovedHarmonySearch
         private void SortByFx()
         {
             HM = HM.OrderBy(x => x[variablesCount]).ToArray();
-
         }
 
         private double[][] InitializeHM()
@@ -149,8 +143,18 @@ namespace ImprovedHarmonySearch
 
             return random;
         }
+        
+        private double[] InitializeFxValue()
+        {
+            double[] fValue = new double[HMS];
 
+            for (int i = 0; i < HMS; i++)
+            {
+                fValue[i] = CalculateObjectiveFunc(HM[i]);
+            }
 
+            return fValue;
+        }
         // xArr to tablica wartości zmiennych x1,x2 ... 
         private double CalculateObjectiveFunc(double[] xArr)
         {
@@ -163,18 +167,12 @@ namespace ImprovedHarmonySearch
             return result;
         }
 
-        private double[] InitializeFxValue()
+        //step 3 of algorithm 
+        private void ImproviseNewHarmony()
         {
-            double[] fValue = new double[HMS];
-
-            for (int i = 0; i < HMS; i++)
-            {
-                fValue[i] = CalculateObjectiveFunc(HM[i]);
-            }
-
-            return fValue;
 
         }
+
         private void lostFocusOnObjFunc(object sender, RoutedEventArgs e)
         {
             var expression = objectiveFunction.Text;
@@ -199,7 +197,6 @@ namespace ImprovedHarmonySearch
             double[] db = new double[2] { 1, 5 };
 
             result.Text = $"{CalculateObjectiveFunc(db)}";
-
 
             //window.Show();
 
