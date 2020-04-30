@@ -51,7 +51,7 @@ namespace ImprovedHarmonySearch
         double[] xU;
         double[][] HM;
 
-        double[] newHarmonyVec; 
+        double[] newHarmonyVec;
         int gn = 0;
         double PARgn;
         double bwgn;
@@ -67,7 +67,7 @@ namespace ImprovedHarmonySearch
 
         private void SearchHarmony(object sender, RoutedEventArgs e)
         {
-            double fx; 
+            double fx;
 
             InitializeParameters();
             HM = InitializeHM();
@@ -79,17 +79,18 @@ namespace ImprovedHarmonySearch
                 newHarmonyVec = ImproviseNewHarmony(); //step 3
 
                 fx = CalculateObjectiveFunc(newHarmonyVec); //step 4 
-                if(fx < HM[HMS-1][variablesCount]) // jeśli nowa wartość fx jest mniejsza od największej w posortowanje tab HM to należy dodać rozwiązanie 
+                if (fx < HM[HMS - 1][variablesCount]) // jeśli nowa wartość fx jest mniejsza od największej w posortowanje tab HM to należy dodać rozwiązanie 
                 {
                     Array.Resize(ref newHarmonyVec, variablesCount + 1);
                     newHarmonyVec[variablesCount] = fx; // dodanie wartości funkcji celu do wektora z nowym rozwiązaniem
 
                     HM[HMS - 1] = newHarmonyVec; //wstawienie nowego wektora rozwiązań na najgorsze rozwiązanie
                     SortByFx(); //posortuj wg wartosci funkcji celu 
-                   
+
                 }
             }
 
+            // dla n = 4 result.Text = $"f = {HM[0][variablesCount]}, x1 = {HM[0][0]}, x2 = {HM[0][1]}, x3 = {HM[0][2]}, x4 = {HM[0][3]}";
             result.Text = $"f = {HM[0][variablesCount]}, x1 = {HM[0][0]}, x2 = {HM[0][1]}";
 
         }
@@ -115,15 +116,16 @@ namespace ImprovedHarmonySearch
             {
                 double.Parse(x1min.Text),
                 double.Parse(x2min.Text),
-               // double.Parse(x3min.Text)// itp dla n > 2 
+                double.Parse(x3min.Text),// itp dla n > 2 
+                double.Parse(x4min.Text)
             };
 
             xU = new double[]
             {
-
                 double.Parse(x1max.Text),
                 double.Parse(x2max.Text),
-               // double.Parse(x3min.Text) //itp dla n > 2 
+                double.Parse(x3max.Text), //itp dla n > 2 
+                double.Parse(x4max.Text)
             };
         }
 
@@ -221,7 +223,7 @@ namespace ImprovedHarmonySearch
                 {
                     //YES
                     D1 = (int)(rand.NextDouble() * HMS) + 1;
-                    D2 = HM[D1-1][i];
+                    D2 = HM[D1 - 1][i];
                     NHV[i] = D2;
 
 
@@ -231,23 +233,23 @@ namespace ImprovedHarmonySearch
                         if (rand.NextDouble() <= 0.5)
                         {
                             //YES
-                            D3 = NHV[i] - (rand.NextDouble() * bwgn); 
+                            D3 = NHV[i] - (rand.NextDouble() * bwgn);
 
-                            if(xL[i] <= D3)
+                            if (xL[i] <= D3)
                             {
                                 //YES
-                                NHV[i] = D3; 
+                                NHV[i] = D3;
                             }
                             //FOR NO DO NOTHING
                         }
                         else
                         {
                             //NO
-                            D3 = NHV[i] + (rand.NextDouble() * bwgn); 
+                            D3 = NHV[i] + (rand.NextDouble() * bwgn);
 
-                            if(xU[i] >= D3)
+                            if (xU[i] >= D3)
                             {
-                                NHV[i] = D3; 
+                                NHV[i] = D3;
                             }
                         }
                     }
@@ -263,7 +265,7 @@ namespace ImprovedHarmonySearch
             }
             gn++;
 
-            return NHV; 
+            return NHV;
         }
 
         private void UpdateHarmonyMemory()
@@ -276,7 +278,7 @@ namespace ImprovedHarmonySearch
         {
             var expression = objectiveFunction.Text;
             detectedVar.Text = string.Empty;
-            variablesCount = 0; 
+            variablesCount = 0;
             variableNames = new List<string>(); //list of variables name 
                                                 //  XScopeWindow window = new XScopeWindow();
 
