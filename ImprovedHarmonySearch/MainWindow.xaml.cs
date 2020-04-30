@@ -62,8 +62,11 @@ namespace ImprovedHarmonySearch
         {
             InitializeParameters();
             HM = InitializeHM();
-            fValue = InitializeFxValue();
-            SortTwoArrays(HM, fValue); 
+            ResizeHarmonyMemoryAddFx();
+
+            SortByFx(); 
+           // fValue = InitializeFxValue();
+           //  SortTwoArrays(HM, fValue); 
 
         }
 
@@ -100,17 +103,16 @@ namespace ImprovedHarmonySearch
             };
         }
 
-        private void SortTwoArrays(double[][] HM, double[] fx)
+        private void SortByFx()
         {
-            for (int i = 0; i < HMS; i++)
-            {
-                Array.Sort(fx,HM[]);
-            }
+            HM = HM.OrderBy(x => x[variablesCount]).ToArray();
+
         }
 
         private double[][] InitializeHM()
         {
             double[][] HM = new double[HMS][]; //+1 bo jeszcze wartosc funkcji celu  
+            
 
             for (int z = 0; z < HMS; z++)
             {
@@ -122,10 +124,23 @@ namespace ImprovedHarmonySearch
                 for (int i = 0; i < HMS; i++) //najpierw inicjalizacja dla całego x1, później dla x2, bo zakresy moga sie roznic 
                 {
                     HM[i][j] = RandomNumberInScope(xL[j], xU[j]);
+                    
                 }
             }
+                     
 
             return HM;
+        }
+
+        private void ResizeHarmonyMemoryAddFx()
+        {
+            double[] fV = InitializeFxValue();
+            //powiekszenie tablicy o 1 rozmiar dla wartości  funkcji celu 
+            for (int k = 0; k < HMS; k++)
+            {
+                Array.Resize(ref HM[k], variablesCount + 1); //zwieksz rozmiar 
+                HM[k][variablesCount] = fV[k];               //postaw wartosc funkcji celu    
+            }
         }
 
         private double RandomNumberInScope(double lowerBound, double upperBound)
@@ -165,7 +180,7 @@ namespace ImprovedHarmonySearch
             var expression = objectiveFunction.Text;
             detectedVar.Text = string.Empty;
             variableNames = new List<string>(); //list of variables name 
-            XScopeWindow window = new XScopeWindow();
+          //  XScopeWindow window = new XScopeWindow();
 
             //wyszukanie liczby zmiennych n <= 5 z załozenia od pani Doktor 
             for (int i = 1; i < n + 1; i++)
@@ -186,7 +201,7 @@ namespace ImprovedHarmonySearch
             result.Text = $"{CalculateObjectiveFunc(db)}";
 
 
-            window.Show();
+            //window.Show();
 
         }
 
