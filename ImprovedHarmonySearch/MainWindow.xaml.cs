@@ -50,7 +50,16 @@ namespace ImprovedHarmonySearch
         double[] xL;
         double[] xU;
         double[][] HM;
-        
+
+        double[] newHarmonyVec; 
+        int gn = 0;
+        double PARgn;
+        double bwgn;
+        double c;
+        int D1;
+        double D2;
+        double D3;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -58,11 +67,29 @@ namespace ImprovedHarmonySearch
 
         private void SearchHarmony(object sender, RoutedEventArgs e)
         {
+            double fx; 
+
             InitializeParameters();
             HM = InitializeHM();
             ResizeHarmonyMemoryAddFx();
-            SortByFx(); 
-           
+            SortByFx();
+
+            for (int i = 0; i < NI; i++)
+            {
+                newHarmonyVec = ImproviseNewHarmony(); //step 3
+
+                fx = CalculateObjectiveFunc(newHarmonyVec); //step 4 
+                if(fx < HM[HMS-1][variablesCount]) // jeśli nowa wartość fx jest mniejsza od największej w posortowanje tab HM to należy dodać rozwiązanie 
+                {
+                    Array.Resize(ref newHarmonyVec, variablesCount + 1);
+                    newHarmonyVec[variablesCount] = fx; // dodanie wartości funkcji celu do wektora z nowym rozwiązaniem
+
+                    HM[HMS - 1] = newHarmonyVec; //wstawienie nowego wektora rozwiązań na najgorsze rozwiązanie
+                    SortByFx(); //posortuj wg wartosci funkcji celu 
+                    
+                }
+            }
+
         }
 
         private void InitializeParameters()
@@ -106,7 +133,7 @@ namespace ImprovedHarmonySearch
         private double[][] InitializeHM()
         {
             double[][] HM = new double[HMS][]; //+1 bo jeszcze wartosc funkcji celu  
-            
+
 
             for (int z = 0; z < HMS; z++)
             {
@@ -118,10 +145,10 @@ namespace ImprovedHarmonySearch
                 for (int i = 0; i < HMS; i++) //najpierw inicjalizacja dla całego x1, później dla x2, bo zakresy moga sie roznic 
                 {
                     HM[i][j] = RandomNumberInScope(xL[j], xU[j]);
-                    
+
                 }
             }
-                     
+
 
             return HM;
         }
@@ -143,7 +170,7 @@ namespace ImprovedHarmonySearch
 
             return random;
         }
-        
+
         private double[] InitializeFxValue()
         {
             double[] fValue = new double[HMS];
@@ -166,19 +193,90 @@ namespace ImprovedHarmonySearch
 
             return result;
         }
+        private double CalculateF()
+        {
+            double fValue = new double();
+
+            for (int i = 0; i < HMS; i++)
+            {
+                fValue = CalculateObjectiveFunc(HM[i]);
+            }
+
+            return fValue;
+        }
 
         //step 3 of algorithm 
-        private void ImproviseNewHarmony()
+        private double[] ImproviseNewHarmony()
+        {
+            double[] NHV = new double[variablesCount];
+
+            for (int i = 0; i < variablesCount; i++)
+            {
+                PARgn = parMIN + ((parMAX - parMIN) / NI) * gn;
+                c = Math.Log(bwMIN / bwMAX) / NI;
+                bwgn = bwMAX * Math.Exp(c * gn);
+
+                if (rand.NextDouble() < hmcr)
+                {
+                    //YES
+                    D1 = (int)(rand.NextDouble() * HMS) + 1;
+                    D2 = HM[D1][i];
+                    NHV[i] = D2;
+
+
+                    //sprawdzenie czy ulepszamy SPOSÓB NR 2
+                    if (rand.NextDouble() < PARgn)
+                    {
+                        if (rand.NextDouble() <= 0.5)
+                        {
+                            //YES
+                            D3 = NHV[i] - (rand.NextDouble() * bwgn); 
+
+                            if(xL[i] <= D3)
+                            {
+                                //YES
+                                NHV[i] = D3; 
+                            }
+                            //FOR NO DO NOTHING
+                        }
+                        else
+                        {
+                            //NO
+                            D3 = NHV[i] + (rand.NextDouble() * bwgn); 
+
+                            if(xU[i] >= D3)
+                            {
+                                NHV[i] = D3; 
+                            }
+                        }
+                    }
+                    //FOR NO DO NOTHING 
+
+                }
+                else //opcja dla 3 sposobu szukania zmiennej x[i] - randomowa wartość w zakresie xL[i]<x[i]<xU[i] 
+                {
+                    //NO
+                    NHV[i] = RandomNumberInScope(xL[i], xU[i]);
+                }
+
+            }
+            gn++;
+
+            return NHV; 
+        }
+
+        private void UpdateHarmonyMemory()
         {
 
         }
+
 
         private void lostFocusOnObjFunc(object sender, RoutedEventArgs e)
         {
             var expression = objectiveFunction.Text;
             detectedVar.Text = string.Empty;
             variableNames = new List<string>(); //list of variables name 
-          //  XScopeWindow window = new XScopeWindow();
+                                                //  XScopeWindow window = new XScopeWindow();
 
             //wyszukanie liczby zmiennych n <= 5 z załozenia od pani Doktor 
             for (int i = 1; i < n + 1; i++)
