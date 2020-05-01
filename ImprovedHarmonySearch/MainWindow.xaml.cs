@@ -14,9 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
-
-
-
+using System.Diagnostics;
 
 namespace ImprovedHarmonySearch
 {
@@ -34,7 +32,7 @@ namespace ImprovedHarmonySearch
         int variablesCount;
         const int n = 5; //maksymalna liczba zmiennych z założeń
         string values; //joined values with "," 
-        Function f; //funkcja celu 
+        private static Function f; //funkcja celu 
         org.mariuszgromada.math.mxparser.Expression ex; //wyrazenie do obliczenia
         List<string> variableNames; //lista nazw zmiennych 
 
@@ -59,6 +57,7 @@ namespace ImprovedHarmonySearch
         int D1;
         double D2;
         double D3;
+        double fx;
 
         public MainWindow()
         {
@@ -67,9 +66,11 @@ namespace ImprovedHarmonySearch
 
         private void SearchHarmony(object sender, RoutedEventArgs e)
         {
-            double fx;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
-            InitializeParameters();
+
+            // InitializeParameters();
             HM = InitializeHM();
             ResizeHarmonyMemoryAddFx();
             SortByFx();
@@ -90,8 +91,10 @@ namespace ImprovedHarmonySearch
                 }
             }
 
+            sw.Stop();
             // dla n = 4 result.Text = $"f = {HM[0][variablesCount]}, x1 = {HM[0][0]}, x2 = {HM[0][1]}, x3 = {HM[0][2]}, x4 = {HM[0][3]}";
-            result.Text = $"f = {HM[0][variablesCount]}, x1 = {HM[0][0]}, x2 = {HM[0][1]}";
+            result.Text = $"f = {HM[0][variablesCount]}, x1 = {HM[0][0]}, x2 = {HM[0][1]} czas: {sw.ElapsedMilliseconds}";
+            result.Text = $"czas: {sw.ElapsedMilliseconds}";
 
         }
 
@@ -105,27 +108,21 @@ namespace ImprovedHarmonySearch
             NI = int.Parse(Ni.Text);
             HMS = int.Parse(hms.Text);
 
-            //inicjalizacja lower and upper bound
-            //for (int i = 1; i < variablesCount + 1; i++)
-            //{
-            //    xL[i] = double.Parse(($"x{i}min.Text");
-            //    xU[i] = double.Parse((TextBox)$"x{i}max.Text");
-            //}  ----> to jest źle nie działa ale trzeba zautomatyzować proces zczytywania z textboxów 
 
             xL = new double[]
             {
                 double.Parse(x1min.Text),
                 double.Parse(x2min.Text),
-                double.Parse(x3min.Text),// itp dla n > 2 
-                double.Parse(x4min.Text)
+              //  double.Parse(x3min.Text),// itp dla n > 2 
+               // double.Parse(x4min.Text)
             };
 
             xU = new double[]
             {
                 double.Parse(x1max.Text),
                 double.Parse(x2max.Text),
-                double.Parse(x3max.Text), //itp dla n > 2 
-                double.Parse(x4max.Text)
+             //   double.Parse(x3max.Text), //itp dla n > 2 
+             //   double.Parse(x4max.Text)
             };
         }
 
@@ -152,6 +149,7 @@ namespace ImprovedHarmonySearch
 
                 }
             }
+
 
             return HM;
         }
@@ -185,17 +183,22 @@ namespace ImprovedHarmonySearch
 
             return fValue;
         }
+
         // xArr to tablica wartości zmiennych x1,x2 ... 
         private double CalculateObjectiveFunc(double[] xArr)
         {
             double result;
+           
+            //string spr = string.Join(",", xArr);
+           // ex = new org.mariuszgromada.math.mxparser.Expression($"f({string.Join(",", xArr)})", f);
 
-            string spr = string.Join(",", xArr);
-            ex = new org.mariuszgromada.math.mxparser.Expression($"f({string.Join(",", xArr)})", f);
-            result = ex.calculate();
+               //result = ex.calculate();
 
+            result = f.calculate(xArr); 
+            
             return result;
         }
+
         private double CalculateF()
         {
             double fValue = new double();
@@ -268,12 +271,6 @@ namespace ImprovedHarmonySearch
             return NHV;
         }
 
-        private void UpdateHarmonyMemory()
-        {
-
-        }
-
-
         private void lostFocusOnObjFunc(object sender, RoutedEventArgs e)
         {
             var expression = objectiveFunction.Text;
@@ -304,7 +301,10 @@ namespace ImprovedHarmonySearch
 
         }
 
-
+        private void SaveParametersOnclick(object sender, RoutedEventArgs e)
+        {
+            InitializeParameters();
+        }
     }
 
 }
