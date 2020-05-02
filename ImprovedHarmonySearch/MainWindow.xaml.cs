@@ -24,18 +24,15 @@ namespace ImprovedHarmonySearch
     public partial class MainWindow : Window
     {
 
-        System.IFormatProvider cultureUS = new System.Globalization.CultureInfo("en-US");
-        System.Globalization.CultureInfo cultureInfo = new System.Globalization.CultureInfo("en-US");
+        const string OBJ_FUNC_WRONG = "Wrong format of objective function!";
+        const string OBJ_FUNC_VARIABLE_NOT_FOUND = "Parser does not find any variables.";
 
-        Random rand = new Random(); // dla pewności rand musi być globalny (jesli się okaze ze nie wystepuje nigdzie ponowna 
-        //jego instancja w innych klasach to mozna go przenisc do klasy IHS (Search Harmony) 
-        int variablesCount;
-        const int n = 5; //maksymalna liczba zmiennych z założeń
+        Random rand = new Random(); 
+        int decisionVariableQty; //in algorithm just N 
+        const int n = 5; //max of decision variables 
         string values; //joined values with "," 
-        private static Function f; //funkcja celu 
-        org.mariuszgromada.math.mxparser.Expression ex; //wyrazenie do obliczenia
-        List<string> variableNames; //lista nazw zmiennych 
-
+        private static Function function; //objective function
+        string expression;
         //parameters of algorithm 
         double hmcr;
         double parMIN;
@@ -49,7 +46,7 @@ namespace ImprovedHarmonySearch
         double[] xU;
         double[][] HM;
 
-        double[] newHarmonyVec;
+        double[] newImprovisedHarmony;
         int gn = 0;
         double PARgn;
         double bwgn;
@@ -64,37 +61,21 @@ namespace ImprovedHarmonySearch
             InitializeComponent();
         }
 
-        private void SearchHarmony(object sender, RoutedEventArgs e)
+        private void DoSearchHarmonyOnClick(object sender, RoutedEventArgs e)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-
-
-            // InitializeParameters();
-            HM = InitializeHM();
-            ResizeHarmonyMemoryAddFx();
-            SortByFx();
-
-            for (int i = 0; i < NI; i++)
-            {
-                newHarmonyVec = ImproviseNewHarmony(); //step 3
-
-                fx = CalculateObjectiveFunc(newHarmonyVec); //step 4 
-                if (fx < HM[HMS - 1][variablesCount]) // jeśli nowa wartość fx jest mniejsza od największej w posortowanje tab HM to należy dodać rozwiązanie 
-                {
-                    Array.Resize(ref newHarmonyVec, variablesCount + 1);
-                    newHarmonyVec[variablesCount] = fx; // dodanie wartości funkcji celu do wektora z nowym rozwiązaniem
-
-                    HM[HMS - 1] = newHarmonyVec; //wstawienie nowego wektora rozwiązań na najgorsze rozwiązanie
-                    SortByFx(); //posortuj wg wartosci funkcji celu 
-
-                }
-            }
+            AmelioratedHarmonySearch ahs = new AmelioratedHarmonySearch(values, expression, decisionVariableQty,
+                                                                        xL, xU, hmcr, parMIN, parMAX, bwMIN,
+                                                                        bwMAX, NI, HMS);
+            ahs.ImprovedHarmonySearch();
+            string results = ahs.GetResults();
 
             sw.Stop();
-            // dla n = 4 result.Text = $"f = {HM[0][variablesCount]}, x1 = {HM[0][0]}, x2 = {HM[0][1]}, x3 = {HM[0][2]}, x4 = {HM[0][3]}";
-            result.Text = $"f = {HM[0][variablesCount]}, x1 = {HM[0][0]}, x2 = {HM[0][1]} czas: {sw.ElapsedMilliseconds}";
-            result.Text = $"czas: {sw.ElapsedMilliseconds}";
+
+            result.Text = results;
+            //  result.Text = $"time: {sw.ElapsedMilliseconds}";
+            CountBtn.IsEnabled = false;
 
         }
 
@@ -124,187 +105,77 @@ namespace ImprovedHarmonySearch
              //   double.Parse(x3max.Text), //itp dla n > 2 
              //   double.Parse(x4max.Text)
             };
-        }
 
-        private void SortByFx()
-        {
-            HM = HM.OrderBy(x => x[variablesCount]).ToArray();
-        }
-
-        private double[][] InitializeHM()
-        {
-            double[][] HM = new double[HMS][]; //+1 bo jeszcze wartosc funkcji celu  
-
-
-            for (int z = 0; z < HMS; z++)
-            {
-                HM[z] = new double[variablesCount];
-            }
-
-            for (int j = 0; j < variablesCount; j++)
-            {
-                for (int i = 0; i < HMS; i++) //najpierw inicjalizacja dla całego x1, później dla x2, bo zakresy moga sie roznic 
-                {
-                    HM[i][j] = RandomNumberInScope(xL[j], xU[j]);
-
-                }
-            }
-
-
-            return HM;
-        }
-
-        private void ResizeHarmonyMemoryAddFx()
-        {
-            double[] fV = InitializeFxValue();
-            //powiekszenie tablicy o 1 rozmiar dla wartości  funkcji celu 
-            for (int k = 0; k < HMS; k++)
-            {
-                Array.Resize(ref HM[k], variablesCount + 1); //zwieksz rozmiar 
-                HM[k][variablesCount] = fV[k];               //postaw wartosc funkcji celu    
-            }
-        }
-
-        private double RandomNumberInScope(double lowerBound, double upperBound)
-        {
-            double random = (rand.NextDouble() * (upperBound - lowerBound)) + lowerBound; //nextdouble to z uniform [0,1]  
-
-            return random;
-        }
-
-        private double[] InitializeFxValue()
-        {
-            double[] fValue = new double[HMS];
-
-            for (int i = 0; i < HMS; i++)
-            {
-                fValue[i] = CalculateObjectiveFunc(HM[i]);
-            }
-
-            return fValue;
-        }
-
-        // xArr to tablica wartości zmiennych x1,x2 ... 
-        private double CalculateObjectiveFunc(double[] xArr)
-        {
-            double result;
-           
-            //string spr = string.Join(",", xArr);
-           // ex = new org.mariuszgromada.math.mxparser.Expression($"f({string.Join(",", xArr)})", f);
-
-               //result = ex.calculate();
-
-            result = f.calculate(xArr); 
-            
-            return result;
-        }
-
-        private double CalculateF()
-        {
-            double fValue = new double();
-
-            for (int i = 0; i < HMS; i++)
-            {
-                fValue = CalculateObjectiveFunc(HM[i]);
-            }
-
-            return fValue;
-        }
-
-        //step 3 of algorithm 
-        private double[] ImproviseNewHarmony()
-        {
-            double[] NHV = new double[variablesCount];
-
-            for (int i = 0; i < variablesCount; i++)
-            {
-                PARgn = parMIN + ((parMAX - parMIN) / NI) * gn;
-                c = Math.Log(bwMIN / bwMAX) / NI;
-                bwgn = bwMAX * Math.Exp(c * gn);
-
-                if (rand.NextDouble() < hmcr)
-                {
-                    //YES
-                    D1 = (int)(rand.NextDouble() * HMS) + 1;
-                    D2 = HM[D1 - 1][i];
-                    NHV[i] = D2;
-
-
-                    //sprawdzenie czy ulepszamy SPOSÓB NR 2
-                    if (rand.NextDouble() < PARgn)
-                    {
-                        if (rand.NextDouble() <= 0.5)
-                        {
-                            //YES
-                            D3 = NHV[i] - (rand.NextDouble() * bwgn);
-
-                            if (xL[i] <= D3)
-                            {
-                                //YES
-                                NHV[i] = D3;
-                            }
-                            //FOR NO DO NOTHING
-                        }
-                        else
-                        {
-                            //NO
-                            D3 = NHV[i] + (rand.NextDouble() * bwgn);
-
-                            if (xU[i] >= D3)
-                            {
-                                NHV[i] = D3;
-                            }
-                        }
-                    }
-                    //FOR NO DO NOTHING 
-
-                }
-                else //opcja dla 3 sposobu szukania zmiennej x[i] - randomowa wartość w zakresie xL[i]<x[i]<xU[i] 
-                {
-                    //NO
-                    NHV[i] = RandomNumberInScope(xL[i], xU[i]);
-                }
-
-            }
-            gn++;
-
-            return NHV;
         }
 
         private void lostFocusOnObjFunc(object sender, RoutedEventArgs e)
         {
-            var expression = objectiveFunction.Text;
-            detectedVar.Text = string.Empty;
-            variablesCount = 0;
-            variableNames = new List<string>(); //list of variables name 
-                                                //  XScopeWindow window = new XScopeWindow();
+            expression = objectiveFunction.Text;
 
-            //wyszukanie liczby zmiennych n <= 5 z załozenia od pani Doktor 
+            detectedVariables.Text = string.Empty;
+            decisionVariableQty = 0;
+
+            List<string> variables = DetectVariables(expression);
+
+            decisionVariableQty = variables.Count;
+
+            if (decisionVariableQty != 0)
+            {
+                values = string.Join(",", variables);
+                detectedVariables.Text = values;
+                function = new Function($"f({values}) = {expression}");
+
+                //check syntax of obj function 
+                if (function.checkSyntax() == false)
+                {
+                    MessageBox.Show(OBJ_FUNC_WRONG);
+                }
+            }
+            else
+            {
+                MessageBox.Show(OBJ_FUNC_VARIABLE_NOT_FOUND);
+            }
+
+        }
+
+        private List<string> DetectVariables(string expression)
+        {
+            List<string> variables = new List<string>();
+
             for (int i = 1; i < n + 1; i++)
             {
                 if (expression.Contains($"x{i}"))
                 {
-                    variablesCount++;
-                    variableNames.Add($"x{i}");
+                    variables.Add($"x{i}");
                 }
             }
 
-            values = string.Join(",", variableNames);
-            detectedVar.Text = values;
-
-            f = new Function($"f({values}) = {expression}");
-            double[] db = new double[2] { 1, 5 };
-
-            result.Text = $"{CalculateObjectiveFunc(db)}";
-
-            //window.Show();
-
+            return variables;
         }
 
         private void SaveParametersOnclick(object sender, RoutedEventArgs e)
         {
-            InitializeParameters();
+            if (CheckParameters() == true)
+            {
+                CountBtn.IsEnabled = true;
+                InitializeParameters();
+            }
         }
+
+        private bool CheckParameters()
+        {
+            if (double.Parse(parMax.Text) >= 0 && double.Parse(parMax.Text) <= 1
+             && double.Parse(parMin.Text) >= 0 && double.Parse(parMin.Text) <= 1
+             && double.Parse(parMin.Text) < double.Parse(parMax.Text)
+             && double.Parse(HMCR.Text) >= 0 && double.Parse(HMCR.Text) <= 1
+             && double.Parse(bwMin.Text) >= 0 && double.Parse(bwMax.Text) >= 0
+             && double.Parse(bwMin.Text) < double.Parse(bwMax.Text)
+             && int.Parse(Ni.Text) > 0 && int.Parse(hms.Text) > 0)
+                return true;
+
+            return false;
+        }
+
     }
 
 }

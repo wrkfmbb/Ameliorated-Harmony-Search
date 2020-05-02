@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AmelioratedHarmonySearch.cs" />
+    <Compile Include="FunctionParser.cs" />
     <Compile Include="XScopeWindow.xaml.cs">
       <DependentUpon>XScopeWindow.xaml</DependentUpon>
     </Compile>

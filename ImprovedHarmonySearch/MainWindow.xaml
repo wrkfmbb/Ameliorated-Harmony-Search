@@ -10,7 +10,7 @@
         <TextBlock HorizontalAlignment="Left" Height="22" Margin="23,24,0,0" TextWrapping="Wrap" Text="Objective function f(x):" VerticalAlignment="Top" Width="267"/>
         <TextBox Margin="23,46,502,344" Text="100*(x2-x1^2)^2+(1-x1)^2" Name="objectiveFunction" RenderTransformOrigin="0.5,-1.464" LostFocus="lostFocusOnObjFunc"  />
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="23,74,0,0" TextWrapping="Wrap" Text="Detected variables: " VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.494,3.227"/>
-        <TextBlock HorizontalAlignment="Left" Height="29" Margin="129,74,0,0" TextWrapping="Wrap" Name="detectedVar" VerticalAlignment="Top" Width="161"/>
+        <TextBlock HorizontalAlignment="Left" Height="29" Margin="129,74,0,0" TextWrapping="Wrap" Name="detectedVariables" VerticalAlignment="Top" Width="161"/>
         <TextBlock HorizontalAlignment="Left" Margin="42,112,0,0" TextWrapping="Wrap" Text="ParMin:" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="99,106,0,0" TextWrapping="Wrap" Name="parMin" VerticalAlignment="Top" Width="42" Height="28" Text="0.2"/>
         <TextBlock HorizontalAlignment="Left" Margin="42,146,0,0" TextWrapping="Wrap" Text="ParMax:" VerticalAlignment="Top"/>
@@ -26,9 +26,9 @@
         <TextBlock HorizontalAlignment="Left" Margin="172,214,0,0" TextWrapping="Wrap" Text="HMS:" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="219,209,0,0" TextWrapping="Wrap" Name="hms" VerticalAlignment="Top" Width="42" Height="28" Text="20"/>
 
-        <Button RenderTransformOrigin="0.509,-2.222" Margin="23,252,502,140" Click="SearchHarmony">Count</Button>
+        <Button RenderTransformOrigin="0.509,-2.222" Margin="23,252,502,140" Click="DoSearchHarmonyOnClick" IsEnabled="False" Name="CountBtn">Count</Button>
         <TextBlock Margin="23,313,502,85" Text="Results:" />
-        <TextBlock Margin="23,337,502,18" Text="" Name ="result" />
+        <TextBlock Margin="23,337,502,18" Text="{Binding GetResult}" Name ="result" />
         <TextBlock HorizontalAlignment="Left" Margin="313,105,0,0" TextWrapping="Wrap" Text="x1min" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="314,132,0,0" TextWrapping="Wrap" Text="x2min" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="313,162,0,0" TextWrapping="Wrap" Text="x3min" VerticalAlignment="Top"/>
