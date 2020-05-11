@@ -50,7 +50,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="558,181,0,0" x:Name ="x4max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Hidden"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="558,206,0,0" x:Name ="x5max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Hidden"/>
         <Button Content="Save params" HorizontalAlignment="Left" Margin="23,217,0,0" VerticalAlignment="Top" Width="77" Height="30" Click="SaveParametersOnclick"/>
-        <TextBlock HorizontalAlignment="Left" Margin="456,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Text="CONSTRAINTS"/>
+        <TextBlock HorizontalAlignment="Left" Margin="456,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Text="CONSTRAINTS" Name="Constraints" Visibility="Hidden"/>
 
     </Grid>
 </Window>

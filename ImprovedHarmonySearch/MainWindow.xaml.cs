@@ -157,6 +157,8 @@ namespace ImprovedHarmonySearch
             List<string> variables = DetectVariables(expression);
 
             decisionVariableQty = variables.Count;
+
+            Constraints.Visibility = Visibility.Visible; 
             SetVisibleTextbox();
 
             if (decisionVariableQty != 0)
