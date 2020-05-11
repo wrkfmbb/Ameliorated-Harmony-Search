@@ -26,8 +26,9 @@ namespace ImprovedHarmonySearch
 
         const string OBJ_FUNC_WRONG = "Wrong format of objective function!";
         const string OBJ_FUNC_VARIABLE_NOT_FOUND = "Parser does not find any variables.";
+        const string WRONG_PARAMETERS = "Wrong parameters.";
 
-        Random rand = new Random(); 
+        Random rand = new Random();
         int decisionVariableQty; //in algorithm just N 
         const int n = 5; //max of decision variables 
         string values; //joined values with "," 
@@ -56,9 +57,43 @@ namespace ImprovedHarmonySearch
         double D3;
         double fx;
 
+        TextBox[] minTextbox;
+        TextBox[] maxTextbox;
+        TextBlock[] descriptionTextblock;
+
+
+
         public MainWindow()
         {
             InitializeComponent();
+            GetTextboxesX();
+
+        }
+
+        void GetTextboxesX()
+        {
+            minTextbox = new TextBox[] { x1min, x2min, x3min, x4min, x5min };
+            maxTextbox = new TextBox[] { x1max, x2max, x3max, x4max, x5max };
+            descriptionTextblock = new TextBlock[] { x1, x2, x3, x4, x5 };
+        }
+        void HideAllTextboxes()
+        {
+            for (int i = 0; i < n; i++)
+            {
+                minTextbox[i].Visibility = Visibility.Hidden;
+                maxTextbox[i].Visibility = Visibility.Hidden;
+                descriptionTextblock[i].Visibility = Visibility.Hidden;
+            }
+        }
+        void SetVisibleTextbox()
+        {
+            HideAllTextboxes();
+            for (int i = 0; i < decisionVariableQty; i++)
+            {
+                minTextbox[i].Visibility = Visibility.Visible;
+                maxTextbox[i].Visibility = Visibility.Visible;
+                descriptionTextblock[i].Visibility = Visibility.Visible;
+            }
         }
 
         private void DoSearchHarmonyOnClick(object sender, RoutedEventArgs e)
@@ -90,22 +125,17 @@ namespace ImprovedHarmonySearch
             HMS = int.Parse(hms.Text);
 
 
-            xL = new double[]
+            xL = new double[decisionVariableQty];
+            for (int i = 0; i < decisionVariableQty; i++)
             {
-                double.Parse(x1min.Text),
-                double.Parse(x2min.Text),
-              //  double.Parse(x3min.Text),// itp dla n > 2 
-               // double.Parse(x4min.Text)
-            };
+                xL[i] = double.Parse(minTextbox[i].Text);
+            }
 
-            xU = new double[]
+            xU = new double[decisionVariableQty];
+            for (int i = 0; i < decisionVariableQty; i++)
             {
-                double.Parse(x1max.Text),
-                double.Parse(x2max.Text),
-             //   double.Parse(x3max.Text), //itp dla n > 2 
-             //   double.Parse(x4max.Text)
-            };
-
+                xU[i] = double.Parse(maxTextbox[i].Text);
+            }
         }
 
         private void lostFocusOnObjFunc(object sender, RoutedEventArgs e)
@@ -118,6 +148,7 @@ namespace ImprovedHarmonySearch
             List<string> variables = DetectVariables(expression);
 
             decisionVariableQty = variables.Count;
+            SetVisibleTextbox();
 
             if (decisionVariableQty != 0)
             {
@@ -160,6 +191,21 @@ namespace ImprovedHarmonySearch
                 CountBtn.IsEnabled = true;
                 InitializeParameters();
             }
+            else
+            {
+                MessageBox.Show(WRONG_PARAMETERS);
+
+            }
+        }
+
+        private bool CheckMinMaxX()
+        {
+            for (int i = 0; i < decisionVariableQty; i++)
+            {
+                if (double.Parse(minTextbox[i].Text) > double.Parse(maxTextbox[i].Text)) return false;
+            }
+
+            return true;
         }
 
         private bool CheckParameters()
@@ -170,11 +216,13 @@ namespace ImprovedHarmonySearch
              && double.Parse(HMCR.Text) >= 0 && double.Parse(HMCR.Text) <= 1
              && double.Parse(bwMin.Text) >= 0 && double.Parse(bwMax.Text) >= 0
              && double.Parse(bwMin.Text) < double.Parse(bwMax.Text)
-             && int.Parse(Ni.Text) > 0 && int.Parse(hms.Text) > 0)
+             && int.Parse(Ni.Text) > 0 && int.Parse(hms.Text) > 0
+             && CheckMinMaxX())
                 return true;
 
             return false;
         }
+
 
     }
 

@@ -89,8 +89,7 @@ namespace ImprovedHarmonySearch
                     HM[i][j] = RandomNumberInScope(xL[j], xU[j]);
                 }
             }
-
-
+          
             return HM;
         }
 
