@@ -188,9 +188,16 @@ namespace ImprovedHarmonySearch
             return NHV;
         }
 
-        public string GetResults()
+        public string[] GetResults()
         {
-            return $"f = {HM[0][decisionVariableQty]}, x1 = {HM[0][0]}, x2 = {HM[0][1]}";
+            string[] result = new string[decisionVariableQty+1]; 
+
+            for(int i = 0; i <= decisionVariableQty; i ++)
+            {
+                result[i] = HM[0][i].ToString(); // kolejność x1 x2 x3... fx  
+            }
+
+            return result;
         }
     }
 }

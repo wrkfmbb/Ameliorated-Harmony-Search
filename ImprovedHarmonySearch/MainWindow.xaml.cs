@@ -104,11 +104,20 @@ namespace ImprovedHarmonySearch
                                                                         xL, xU, hmcr, parMIN, parMAX, bwMIN,
                                                                         bwMAX, NI, HMS);
             ahs.ImprovedHarmonySearch();
-            string results = ahs.GetResults();
+            string[] results = ahs.GetResults();
 
             sw.Stop();
 
-            result.Text = results;
+            string[] outcome = new string[results.Length]; 
+             
+            for(int i = 0; i < decisionVariableQty; i++)
+            {
+                outcome[i] = $"x{i + 1} = {results[i]}"; 
+            }
+            outcome[decisionVariableQty] = $"f = {results[decisionVariableQty]}";
+
+
+            result.Text = string.Join(Environment.NewLine, outcome); 
             //  result.Text = $"time: {sw.ElapsedMilliseconds}";
             CountBtn.IsEnabled = false;
 
