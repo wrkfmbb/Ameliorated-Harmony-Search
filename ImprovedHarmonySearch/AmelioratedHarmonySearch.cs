@@ -1,4 +1,5 @@
 ﻿using org.mariuszgromada.math.mxparser;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace ImprovedHarmonySearch
         double D2;
         double D3;
         double fx;
+        List<DataPoint> pathPoints = new List<DataPoint>();  //data for path 
 
         public AmelioratedHarmonySearch(string variables, string expression, int decisionVariableQty, double[] xL, double[] xU, double hmcr, double parMIN, double parMAX, double bwMIN, double bwMAX, int NI, int HMS)
         {
@@ -51,15 +53,21 @@ namespace ImprovedHarmonySearch
 
         public void ImprovedHarmonySearch()
         {
+
+
             HM = InitializeHarmonyMemory();
-            ResizeHarmonyMemoryAddingObjectiveFuncVal(); 
+            ResizeHarmonyMemoryAddingObjectiveFuncVal();
             SortByObjectiveFunctionValue(); //( O(N*log(N)) optimal O(n^2) worst)
+
+            DataPoint dataPoint = new DataPoint(HM[0][0], HM[0][1]);
+            pathPoints.Add(dataPoint);
 
             for (int i = 0; i < NI; i++)
             {
                 newImprovisedHarmony = ImproviseNewHarmony(); //step 3
 
                 fx = function.calculate(newImprovisedHarmony); //step 4 
+
                 if (fx < HM[HMS - 1][decisionVariableQty]) // jeśli nowa wartość fx jest mniejsza od największej w posortowanje tab HM to należy dodać rozwiązanie 
                 {
                     Array.Resize(ref newImprovisedHarmony, decisionVariableQty + 1);
@@ -68,13 +76,18 @@ namespace ImprovedHarmonySearch
                     HM[HMS - 1] = newImprovisedHarmony; //wstawienie nowego wektora rozwiązań na najgorsze rozwiązanie
                     SortByObjectiveFunctionValue(); //posortuj wg wartosci funkcji celu 
 
+
+                    pathPoints.Add(new DataPoint(HM[0][0], HM[0][1]));
+
                 }
             }
+
+            pathPoints.Add(new DataPoint(HM[0][0], HM[0][1]));
         }
 
         private double[][] InitializeHarmonyMemory()
         {
-            double[][] HM = new double[HMS][]; 
+            double[][] HM = new double[HMS][];
 
 
             for (int z = 0; z < HMS; z++)
@@ -89,14 +102,14 @@ namespace ImprovedHarmonySearch
                     HM[i][j] = RandomNumberInScope(xL[j], xU[j]);
                 }
             }
-          
+
             return HM;
         }
 
         private double RandomNumberInScope(double lowerBound, double upperBound)
         {
 
-            return (rand.NextDouble() * (upperBound - lowerBound)) + lowerBound; 
+            return (rand.NextDouble() * (upperBound - lowerBound)) + lowerBound;
 
         }
 
@@ -188,11 +201,26 @@ namespace ImprovedHarmonySearch
             return NHV;
         }
 
+        public double GetBestX1()
+        {
+            return HM[0][0];
+        }
+
+        public double GetBestX2()
+        {
+            return HM[0][1];
+        }
+
+        public List<DataPoint> GetDataPoints()
+        {
+            return pathPoints;
+        }
+
         public string[] GetResults()
         {
-            string[] result = new string[decisionVariableQty+1]; 
+            string[] result = new string[decisionVariableQty + 1];
 
-            for(int i = 0; i <= decisionVariableQty; i ++)
+            for (int i = 0; i <= decisionVariableQty; i++)
             {
                 result[i] = HM[0][i].ToString(); // kolejność x1 x2 x3... fx  
             }
