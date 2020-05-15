@@ -147,7 +147,7 @@ namespace ImprovedHarmonySearch
             {
                 try
                 {
-                    var tmp = new PlotModel { Title = "Contour Lines" };
+                    var tmp = new PlotModel(); 
 
                     tmp.Axes.Add(new LinearColorAxis
                     {
@@ -193,11 +193,10 @@ namespace ImprovedHarmonySearch
                     };
                     tmp.Series.Add(heatMapSeries);
 
-
                     var cs = new ContourSeries
                     {
                         Color = OxyColors.BlueViolet,
-                        LabelBackground = OxyColors.Transparent, 
+                        //LabelBackground = OxyColors.Transparent, 
                         ColumnCoordinates = x1x1,
                         RowCoordinates = x2x2,
                         Data = peaksData
@@ -221,7 +220,7 @@ namespace ImprovedHarmonySearch
                             BinSize = 10,
                             MarkerType = MarkerType.Cross,
                             MarkerStrokeThickness = 3,
-                           
+                          
                         };
 
                         double x1 = ahs.GetBestX1();

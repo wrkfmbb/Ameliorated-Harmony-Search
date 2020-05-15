@@ -76,7 +76,7 @@ namespace ImprovedHarmonySearch
                     HM[HMS - 1] = newImprovisedHarmony; //wstawienie nowego wektora rozwiązań na najgorsze rozwiązanie
                     SortByObjectiveFunctionValue(); //posortuj wg wartosci funkcji celu 
 
-
+                    //points for path 
                     pathPoints.Add(new DataPoint(HM[0][0], HM[0][1]));
 
                 }

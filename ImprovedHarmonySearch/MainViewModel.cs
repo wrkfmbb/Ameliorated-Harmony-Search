@@ -17,7 +17,7 @@ namespace ImprovedHarmonySearch
         public MainViewModel()
         {
 
-            this.MyModel = new PlotModel { Title = "Contour lines" };
+            this.MyModel = new PlotModel();
 
             double x0 = -6;
             double x1 = 6;
@@ -33,28 +33,12 @@ namespace ImprovedHarmonySearch
             var cs = new ContourSeries
             {
                 Color = OxyColors.Black,
-                LabelBackground = OxyColors.White,
+                LabelBackground = OxyColors.Transparent,
                 ColumnCoordinates = yy,
                 RowCoordinates = xx,
                 Data = peaksData
             };
             this.MyModel.Series.Add(cs);
-
-            //var listPoints = new List<DataPoint>
-            //{
-            //    new DataPoint(0,2),
-            //    new DataPoint(3,4),
-            //};
-
-            //var line = new LineSeries
-            //{
-                
-            //    ItemsSource = listPoints,
-            //    Color = OxyColors.LightPink
-           
-            //};
-            //this.MyModel.Series.Add(line);
-            
 
         }
 
