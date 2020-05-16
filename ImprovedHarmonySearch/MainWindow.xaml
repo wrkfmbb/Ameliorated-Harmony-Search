@@ -32,29 +32,29 @@
 
         <Button RenderTransformOrigin="0.509,-2.222" Margin="23,252,945,585" Click="DoSearchHarmonyOnClick" IsEnabled="False" Name="CountBtn">Count</Button>
         <TextBlock Margin="23,284,1092,561" Text="Results:" />
-        
-            <!--TextBlock Margin="23,308,945,20" Text="{Binding GetResult}" Name ="result"/-->
+
+        <!--TextBlock Margin="23,308,945,20" Text="{Binding GetResult}" Name ="result"/-->
         <TextBox Margin="23,308,945,20" Name="result" SelectionBrush="Transparent" Cursor="Arrow" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
         <TextBlock HorizontalAlignment="Left" Margin="382,66,0,0" TextWrapping="Wrap" Name ="x1" Text="x1" VerticalAlignment="Top" Visibility="Visible"/>
         <TextBlock HorizontalAlignment="Left" Margin="382,93,0,0" TextWrapping="Wrap" Name ="x2" Text="x2" VerticalAlignment="Top" Visibility="Visible"/>
-        <TextBlock HorizontalAlignment="Left" Margin="381,120,0,0" TextWrapping="Wrap" Name ="x3" Text="x3" VerticalAlignment="Top" Visibility="Visible"/>
-        <TextBlock HorizontalAlignment="Left" Margin="382,146,0,0" TextWrapping="Wrap" Name ="x4" Text="x4" VerticalAlignment="Top" Visibility="Visible"/>
-        <TextBlock HorizontalAlignment="Left" Margin="382,173,0,0" TextWrapping="Wrap" Name ="x5" Text="x5" VerticalAlignment="Top" Visibility="Visible"/>
+        <TextBlock HorizontalAlignment="Left" Margin="710,49,0,0" TextWrapping="Wrap" Name ="x3" Text="x3" VerticalAlignment="Top" Visibility="Visible"/>
+        <TextBlock HorizontalAlignment="Left" Margin="711,75,0,0" TextWrapping="Wrap" Name ="x4" Text="x4" VerticalAlignment="Top" Visibility="Visible"/>
+        <TextBlock HorizontalAlignment="Left" Margin="711,102,0,0" TextWrapping="Wrap" Name ="x5" Text="x5" VerticalAlignment="Top" Visibility="Visible"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="412,65,0,0"  x:Name ="x1min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="412,90,0,0" x:Name ="x2min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,115,0,0" x:Name ="x3min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,141,0,0" x:Name ="x4min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,167,0,0" x:Name ="x5min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="741,44,0,0" x:Name ="x3min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="741,70,0,0" x:Name ="x4min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="741,96,0,0" x:Name ="x5min" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="552,65,0,0" x:Name ="x1max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="3" Visibility="Visible"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="552,90,0,0" x:Name ="x2max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="3" Visibility="Visible" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="552,115,0,0" x:Name ="x3max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="552,141,0,0" x:Name ="x4max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="552,166,0,0" x:Name ="x5max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="881,44,0,0" x:Name ="x3max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="881,70,0,0" x:Name ="x4max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="881,95,0,0" x:Name ="x5max" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0" Visibility="Visible"/>
         <Button Content="Save params" HorizontalAlignment="Left" Margin="23,217,0,0" VerticalAlignment="Top" Width="77" Height="30" Click="SaveParametersOnclick"/>
         <TextBlock HorizontalAlignment="Left" Margin="496,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Text="CONSTRAINTS" Name="Constraints" Visibility="Visible" RenderTransformOrigin="0.989,0.376"/>
         <TextBlock HorizontalAlignment="Left" Margin="456,42,0,0" TextWrapping="Wrap" Text="MIN" VerticalAlignment="Top" RenderTransformOrigin="0.174,0.312" Name="min"/>
         <TextBlock HorizontalAlignment="Left" Margin="597,42,0,0" TextWrapping="Wrap" Text="MAX" VerticalAlignment="Top" RenderTransformOrigin="0.174,0.312" Name="max"/>
-        <oxy:PlotView VerticalAlignment="Center" x:Name="Plot1" Model="{Binding MyModel}" Height="710" Margin="352,120,34,39" Padding="10 0 10 10"/>
+        <oxy:PlotView VerticalAlignment="Center" x:Name="Plot1" Model="{Binding MyModel}" Height="706" Margin="352,124,34,39" Padding="10 0 10 10"/>
 
     </Grid>
 </Window>

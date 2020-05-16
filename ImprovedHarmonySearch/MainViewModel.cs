@@ -12,11 +12,8 @@ namespace ImprovedHarmonySearch
 {
     public class MainViewModel : ViewModelBase
     {
-
-
         public MainViewModel()
         {
-
             this.MyModel = new PlotModel();
         }
 

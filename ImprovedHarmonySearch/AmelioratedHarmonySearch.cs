@@ -51,11 +51,19 @@ namespace ImprovedHarmonySearch
             this.HMS = HMS;
 
         }
-
+        public double[] GetRowFromHM(int size)
+        {
+            double[] row = new double[size];  
+            for (int i = 0; i < row.Length; i++)
+            {
+                row[i] = HM[0][i];
+            }
+            return row; 
+        }
         public void ImprovedHarmonySearch()
         {
-            int iterationToDisplay = 10;
-            int counter = NI - iterationToDisplay;
+            int lastIterations = 10;
+            int counter = NI - lastIterations;
 
             HM = InitializeHarmonyMemory();
             ResizeHarmonyMemoryAddingObjectiveFuncVal();
@@ -63,8 +71,8 @@ namespace ImprovedHarmonySearch
 
             DataPoint dataPoint = new DataPoint(HM[0][0], HM[0][1]);
             pathPoints.Add(dataPoint);
-            listPoints.Add(new double[] { HM[0][0], HM[0][1], HM[0][2] });
-
+            listPoints.Add(GetRowFromHM(decisionVariableQty+1)); 
+ 
             for (int i = 0; i < NI; i++)
             {
                 newImprovisedHarmony = ImproviseNewHarmony(); //step 3
@@ -86,11 +94,15 @@ namespace ImprovedHarmonySearch
 
                 if (i >= counter && counter < NI)
                 {
-                    listPoints.Add(new double[] { HM[0][0], HM[0][1], HM[0][2] });
+                    //points from last iterations 
+                    listPoints.Add(GetRowFromHM(decisionVariableQty + 1));
+
                 }
 
             }
-            listPoints.Add(new double[] { HM[0][0], HM[0][1], HM[0][2] }); //przypisanie ostatniej wartości 
+           
+            listPoints.Add(GetRowFromHM(decisionVariableQty + 1));
+
             pathPoints.Add(new DataPoint(HM[0][0], HM[0][1]));
         }
 
@@ -226,7 +238,7 @@ namespace ImprovedHarmonySearch
         }
         public List<double[]> GetFirstAndLastIterationResults()
         {
-            return listPoints; 
+            return listPoints;
         }
 
         public string[] GetResults()

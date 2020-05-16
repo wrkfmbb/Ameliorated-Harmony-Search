@@ -71,9 +71,8 @@ namespace ImprovedHarmonySearch
         {
             InitializeComponent();
             GetTextboxesX();
-            HideDesc(); 
-            HideAllTextboxes(); 
-
+            HideDesc();
+            HideAllTextboxes();
         }
 
         void GetTextboxesX()
@@ -104,13 +103,13 @@ namespace ImprovedHarmonySearch
                 maxTextbox[i].Visibility = Visibility.Hidden;
                 descriptionTextblock[i].Visibility = Visibility.Hidden;
             }
-         
+
         }
 
         void SetVisibleTextbox()
         {
             HideAllTextboxes();
-            ShowDesc(); 
+            ShowDesc();
             for (int i = 0; i < decisionVariableQty; i++)
             {
                 minTextbox[i].Visibility = Visibility.Visible;
@@ -121,30 +120,53 @@ namespace ImprovedHarmonySearch
 
         private void WriteToResultTextBlock(string text)
         {
-            result.Text += text + Environment.NewLine; 
+            result.Text += text + Environment.NewLine;
         }
-
+        private void WriteResultForAllVector(double[] vector)
+        {
+            for (int i = 0; i < vector.Length - 1; i++)
+            {
+                WriteToResultTextBlock($"x{i + 1} = {vector[i]}");
+            }
+            WriteToResultTextBlock($"f = {vector[vector.Length - 1]}");
+        }
         private void DoSearchHarmonyOnClick(object sender, RoutedEventArgs e)
         {
             //    Stopwatch sw = new Stopwatch();
             //    sw.Start();
+            int lastIterations = 10;
 
-            result.Text = string.Empty; 
+            result.Text = string.Empty;
+
             AmelioratedHarmonySearch ahs = new AmelioratedHarmonySearch(values, expression, decisionVariableQty,
                                                                         xL, xU, hmcr, parMIN, parMAX, bwMIN,
                                                                         bwMAX, NI, HMS);
             ahs.ImprovedHarmonySearch();
             List<double[]> listPoints = ahs.GetFirstAndLastIterationResults();
 
-            WriteToResultTextBlock($"First point: {Environment.NewLine}x1 = {listPoints.First()[0]}" +
-                $" {Environment.NewLine}x2 = {listPoints.First()[1]}" +
-                $" {Environment.NewLine}f = {listPoints.First()[2]}");
+            //petla wypisujaca pare ostatnich iteracji 
+            for (int i = 1; i < lastIterations + 1; i++)
+            {
+                WriteToResultTextBlock($"Result for iteration nr {NI - lastIterations + i}");
+                WriteResultForAllVector(listPoints[i]);
+                WriteToResultTextBlock($"{Environment.NewLine}");
+            }
+
+            WriteToResultTextBlock($"First solution: ");
+            WriteResultForAllVector(listPoints.First());
+            WriteToResultTextBlock($"{Environment.NewLine}");
+
+
+            WriteToResultTextBlock($"Best solution: ");
+            WriteResultForAllVector(listPoints.Last());
+            WriteToResultTextBlock($"{Environment.NewLine}");
 
 
 
-            WriteToResultTextBlock($"Best solution: {Environment.NewLine}x1 = {listPoints.Last()[0]}" +
-               $" {Environment.NewLine}x2 = {listPoints.Last()[1]}" +
-               $" {Environment.NewLine}f = {listPoints.Last()[2]}");
+
+            //WriteToResultTextBlock($"Best solution: {Environment.NewLine}x1 = {listPoints.Last()[0]}" +
+            //   $" {Environment.NewLine}x2 = {listPoints.Last()[1]}" +
+            //   $" {Environment.NewLine}f = {listPoints.Last()[2]}");
 
 
             //string[] results = ahs.GetResults();
@@ -171,7 +193,7 @@ namespace ImprovedHarmonySearch
             {
                 try
                 {
-                    var tmp = new PlotModel(); 
+                    var tmp = new PlotModel();
 
                     tmp.Axes.Add(new LinearColorAxis
                     {
@@ -179,14 +201,10 @@ namespace ImprovedHarmonySearch
                         Palette = OxyPalettes.Cool(200)
                     });
 
-
                     double tmpMaxValue = Double.MinValue;
-                    double x1_min = xL[0];
-                    double x1_max = xU[0];
-                    double x2_min = xL[1];
-                    double x2_max = xU[1];
-                    var x1x1 = ArrayBuilder.CreateVector(x1_min, x1_max, 100);
-                    var x2x2 = ArrayBuilder.CreateVector(x2_min, x2_max, 100);
+                    
+                    var x1x1 = ArrayBuilder.CreateVector(xL[0], xU[0], 100);
+                    var x2x2 = ArrayBuilder.CreateVector(xL[1], xU[1], 100);
                     double[,] peaksData = new double[x1x1.GetLength(0), x2x2.GetLength(0)];
                     double[] xy_tab = new double[2];
 
@@ -206,10 +224,10 @@ namespace ImprovedHarmonySearch
 
                     var heatMapSeries = new HeatMapSeries
                     {
-                        X0 = x1_min,
-                        X1 = x1_max,
-                        Y0 = x2_min,
-                        Y1 = x2_max,
+                        X0 = xL[0],
+                        X1 = xU[0],
+                        Y0 = xL[1],
+                        Y1 = xU[1],
                         Interpolate = true,
                         RenderMethod = HeatMapRenderMethod.Bitmap,
                         Data = peaksData
@@ -219,7 +237,7 @@ namespace ImprovedHarmonySearch
                     var cs = new ContourSeries
                     {
                         Color = OxyColors.BlueViolet,
-                        LabelBackground = OxyColors.Transparent, 
+                        LabelBackground = OxyColors.Transparent,
                         ColumnCoordinates = x1x1,
                         RowCoordinates = x2x2,
                         Data = peaksData
@@ -235,23 +253,18 @@ namespace ImprovedHarmonySearch
                     };
                     tmp.Series.Add(path);
 
-
-                    if (CheckParameters() == true)
-                    {
                         var sc = new ScatterSeries
                         {
                             BinSize = 10,
                             MarkerType = MarkerType.Cross,
                             MarkerStrokeThickness = 3,
-                          
-                        };
 
-                        double x1 = ahs.GetBestX1();
-                        double x2 = ahs.GetBestX2();
-                        sc.Points.Add(new ScatterPoint(x1, x2, 5, tmpMaxValue));
+                        };
+                       sc.Points.Add(new ScatterPoint(ahs.GetBestX1(), ahs.GetBestX2(), 5, tmpMaxValue));
                         tmp.Series.Add(sc);
-                    }
+
                     GetMainViewModel().MyModel = tmp;
+
 
 
                 }
@@ -260,6 +273,7 @@ namespace ImprovedHarmonySearch
 
                 }
             }
+           
             CountBtn.IsEnabled = false;
 
         }
@@ -317,6 +331,10 @@ namespace ImprovedHarmonySearch
                 {
                     MessageBox.Show(OBJ_FUNC_WRONG);
                 }
+
+                             
+               GetMainViewModel().MyModel = new PlotModel();
+                
             }
             else
             {
