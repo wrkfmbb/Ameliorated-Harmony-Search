@@ -119,29 +119,53 @@ namespace ImprovedHarmonySearch
             }
         }
 
+        private void WriteToResultTextBlock(string text)
+        {
+            result.Text += text + Environment.NewLine; 
+        }
+
         private void DoSearchHarmonyOnClick(object sender, RoutedEventArgs e)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            //    Stopwatch sw = new Stopwatch();
+            //    sw.Start();
+
+            result.Text = string.Empty; 
             AmelioratedHarmonySearch ahs = new AmelioratedHarmonySearch(values, expression, decisionVariableQty,
                                                                         xL, xU, hmcr, parMIN, parMAX, bwMIN,
                                                                         bwMAX, NI, HMS);
             ahs.ImprovedHarmonySearch();
+            List<double[]> listPoints = ahs.GetFirstAndLastIterationResults();
 
-            string[] results = ahs.GetResults();
-
-            sw.Stop();
-
-            string[] outcome = new string[results.Length];
-
-            for (int i = 0; i < decisionVariableQty; i++)
-            {
-                outcome[i] = $"x{i + 1} = {results[i]}";
-            }
-            outcome[decisionVariableQty] = $"f = {results[decisionVariableQty]}";
+            WriteToResultTextBlock($"First point: {Environment.NewLine}x1 = {listPoints.First()[0]}" +
+                $" {Environment.NewLine}x2 = {listPoints.First()[1]}" +
+                $" {Environment.NewLine}f = {listPoints.First()[2]}");
 
 
-            result.Text = string.Join(Environment.NewLine, outcome);
+
+            WriteToResultTextBlock($"Best solution: {Environment.NewLine}x1 = {listPoints.Last()[0]}" +
+               $" {Environment.NewLine}x2 = {listPoints.Last()[1]}" +
+               $" {Environment.NewLine}f = {listPoints.Last()[2]}");
+
+
+            //string[] results = ahs.GetResults();
+
+            //sw.Stop();
+
+            //string[] outcome = new string[results.Length];
+
+            //for (int i = 0; i < decisionVariableQty; i++)
+            //{
+            //    outcome[i] = $"x{i + 1} = {results[i]}";
+            //}
+            //outcome[decisionVariableQty] = $"f = {results[decisionVariableQty]}";
+
+            //WriteToResultTextBlock("Best solution:"); 
+            //result.Text = string.Join(Environment.NewLine, outcome);
+
+
+            //WriteToResultTextBlock($"{Environment.NewLine}First point: {Environment.NewLine}x1: {ahs.GetDataPoints().First().X}" +
+            //                        $" {Environment.NewLine}x2: {ahs.GetDataPoints().First().Y}" +
+            //                        $"{Environment.NewLine}First point: {Environment.NewLine}x1: {ahs.GetDataPoints().First().X}");
 
             if (decisionVariableQty == 2)
             {
@@ -152,7 +176,7 @@ namespace ImprovedHarmonySearch
                     tmp.Axes.Add(new LinearColorAxis
                     {
                         Position = AxisPosition.Right,
-                        Palette = OxyPalettes.Cool(150)
+                        Palette = OxyPalettes.Cool(200)
                     });
 
 
@@ -180,7 +204,6 @@ namespace ImprovedHarmonySearch
                         }
                     }
 
-
                     var heatMapSeries = new HeatMapSeries
                     {
                         X0 = x1_min,
@@ -196,7 +219,7 @@ namespace ImprovedHarmonySearch
                     var cs = new ContourSeries
                     {
                         Color = OxyColors.BlueViolet,
-                        //LabelBackground = OxyColors.Transparent, 
+                        LabelBackground = OxyColors.Transparent, 
                         ColumnCoordinates = x1x1,
                         RowCoordinates = x2x2,
                         Data = peaksData
@@ -207,7 +230,7 @@ namespace ImprovedHarmonySearch
                     {
                         ItemsSource = ahs.GetDataPoints(),
                         Color = OxyColors.Black,
-                        StrokeThickness = 1
+                        StrokeThickness = 2
 
                     };
                     tmp.Series.Add(path);

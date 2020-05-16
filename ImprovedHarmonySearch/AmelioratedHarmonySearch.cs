@@ -34,6 +34,7 @@ namespace ImprovedHarmonySearch
         double D3;
         double fx;
         List<DataPoint> pathPoints = new List<DataPoint>();  //data for path 
+        List<double[]> listPoints = new List<double[]>();
 
         public AmelioratedHarmonySearch(string variables, string expression, int decisionVariableQty, double[] xL, double[] xU, double hmcr, double parMIN, double parMAX, double bwMIN, double bwMAX, int NI, int HMS)
         {
@@ -53,7 +54,8 @@ namespace ImprovedHarmonySearch
 
         public void ImprovedHarmonySearch()
         {
-
+            int iterationToDisplay = 10;
+            int counter = NI - iterationToDisplay;
 
             HM = InitializeHarmonyMemory();
             ResizeHarmonyMemoryAddingObjectiveFuncVal();
@@ -61,6 +63,7 @@ namespace ImprovedHarmonySearch
 
             DataPoint dataPoint = new DataPoint(HM[0][0], HM[0][1]);
             pathPoints.Add(dataPoint);
+            listPoints.Add(new double[] { HM[0][0], HM[0][1], HM[0][2] });
 
             for (int i = 0; i < NI; i++)
             {
@@ -80,8 +83,14 @@ namespace ImprovedHarmonySearch
                     pathPoints.Add(new DataPoint(HM[0][0], HM[0][1]));
 
                 }
-            }
 
+                if (i >= counter && counter < NI)
+                {
+                    listPoints.Add(new double[] { HM[0][0], HM[0][1], HM[0][2] });
+                }
+
+            }
+            listPoints.Add(new double[] { HM[0][0], HM[0][1], HM[0][2] }); //przypisanie ostatniej wartości 
             pathPoints.Add(new DataPoint(HM[0][0], HM[0][1]));
         }
 
@@ -214,6 +223,10 @@ namespace ImprovedHarmonySearch
         public List<DataPoint> GetDataPoints()
         {
             return pathPoints;
+        }
+        public List<double[]> GetFirstAndLastIterationResults()
+        {
+            return listPoints; 
         }
 
         public string[] GetResults()
