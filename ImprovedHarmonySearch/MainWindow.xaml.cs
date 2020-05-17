@@ -134,7 +134,7 @@ namespace ImprovedHarmonySearch
         {
             //    Stopwatch sw = new Stopwatch();
             //    sw.Start();
-            int lastIterations = 10;
+            int nrOfIterations = 10;
 
             result.Text = string.Empty;
 
@@ -144,10 +144,19 @@ namespace ImprovedHarmonySearch
             ahs.ImprovedHarmonySearch();
             List<double[]> listPoints = ahs.GetFirstAndLastIterationResults();
 
-            //petla wypisujaca pare ostatnich iteracji 
-            for (int i = 1; i < lastIterations + 1; i++)
+           
+            WriteToResultTextBlock($"FISRT ITERATIONS: {Environment.NewLine}");
+            for (int i = 1; i < nrOfIterations + 1; i++)
             {
-                WriteToResultTextBlock($"Result for iteration nr {NI - lastIterations + i}");
+                WriteToResultTextBlock($"Result for iteration nr {i}");
+                WriteResultForAllVector(listPoints[i]);
+                WriteToResultTextBlock($"{Environment.NewLine}");
+            }
+
+            WriteToResultTextBlock($"LAST ITERATIONS: {Environment.NewLine}");
+            for (int i = nrOfIterations + 1; i < 2*nrOfIterations + 1; i++)
+            {
+                WriteToResultTextBlock($"Result for iteration nr {NI - 2*nrOfIterations + i}");
                 WriteResultForAllVector(listPoints[i]);
                 WriteToResultTextBlock($"{Environment.NewLine}");
             }
@@ -157,37 +166,10 @@ namespace ImprovedHarmonySearch
             WriteToResultTextBlock($"{Environment.NewLine}");
 
 
-            WriteToResultTextBlock($"Best solution: ");
+            WriteToResultTextBlock($"Optimal solution: ");
             WriteResultForAllVector(listPoints.Last());
             WriteToResultTextBlock($"{Environment.NewLine}");
 
-
-
-
-            //WriteToResultTextBlock($"Best solution: {Environment.NewLine}x1 = {listPoints.Last()[0]}" +
-            //   $" {Environment.NewLine}x2 = {listPoints.Last()[1]}" +
-            //   $" {Environment.NewLine}f = {listPoints.Last()[2]}");
-
-
-            //string[] results = ahs.GetResults();
-
-            //sw.Stop();
-
-            //string[] outcome = new string[results.Length];
-
-            //for (int i = 0; i < decisionVariableQty; i++)
-            //{
-            //    outcome[i] = $"x{i + 1} = {results[i]}";
-            //}
-            //outcome[decisionVariableQty] = $"f = {results[decisionVariableQty]}";
-
-            //WriteToResultTextBlock("Best solution:"); 
-            //result.Text = string.Join(Environment.NewLine, outcome);
-
-
-            //WriteToResultTextBlock($"{Environment.NewLine}First point: {Environment.NewLine}x1: {ahs.GetDataPoints().First().X}" +
-            //                        $" {Environment.NewLine}x2: {ahs.GetDataPoints().First().Y}" +
-            //                        $"{Environment.NewLine}First point: {Environment.NewLine}x1: {ahs.GetDataPoints().First().X}");
 
             if (decisionVariableQty == 2)
             {

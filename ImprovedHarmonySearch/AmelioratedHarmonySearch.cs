@@ -91,8 +91,12 @@ namespace ImprovedHarmonySearch
                     pathPoints.Add(new DataPoint(HM[0][0], HM[0][1]));
 
                 }
+                if(i >= 0 && i < lastIterations) //10 first iterations
+                {
+                    listPoints.Add(GetRowFromHM(decisionVariableQty + 1));
 
-                if (i >= counter && counter < NI)
+                }
+                if (i >= counter && counter < NI) //10 last iterations 
                 {
                     //points from last iterations 
                     listPoints.Add(GetRowFromHM(decisionVariableQty + 1));
