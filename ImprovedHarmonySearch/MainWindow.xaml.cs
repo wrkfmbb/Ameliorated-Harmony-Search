@@ -134,7 +134,7 @@ namespace ImprovedHarmonySearch
         {
             //    Stopwatch sw = new Stopwatch();
             //    sw.Start();
-            int nrOfIterations = 10;
+            int nrOfIterations = 10; //tu zmiana jesli wiecej wypisać iteracji 
 
             result.Text = string.Empty;
 
@@ -144,21 +144,23 @@ namespace ImprovedHarmonySearch
             ahs.ImprovedHarmonySearch();
             List<double[]> listPoints = ahs.GetFirstAndLastIterationResults();
 
-           
-            WriteToResultTextBlock($"FISRT ITERATIONS: {Environment.NewLine}");
-            for (int i = 1; i < nrOfIterations + 1; i++)
+            if (NI > 2 * nrOfIterations)
             {
-                WriteToResultTextBlock($"Result for iteration nr {i}");
-                WriteResultForAllVector(listPoints[i]);
-                WriteToResultTextBlock($"{Environment.NewLine}");
-            }
+                WriteToResultTextBlock($"FIRST ITERATIONS: {Environment.NewLine}");
+                for (int i = 1; i < nrOfIterations + 1; i++)
+                {
+                    WriteToResultTextBlock($"Result for iteration nr {i}");
+                    WriteResultForAllVector(listPoints[i]);
+                    WriteToResultTextBlock($"{Environment.NewLine}");
+                }
 
-            WriteToResultTextBlock($"LAST ITERATIONS: {Environment.NewLine}");
-            for (int i = nrOfIterations + 1; i < 2*nrOfIterations + 1; i++)
-            {
-                WriteToResultTextBlock($"Result for iteration nr {NI - 2*nrOfIterations + i}");
-                WriteResultForAllVector(listPoints[i]);
-                WriteToResultTextBlock($"{Environment.NewLine}");
+                WriteToResultTextBlock($"LAST ITERATIONS: {Environment.NewLine}");
+                for (int i = nrOfIterations + 1; i < 2 * nrOfIterations + 1; i++)
+                {
+                    WriteToResultTextBlock($"Result for iteration nr {NI - 2 * nrOfIterations + i}");
+                    WriteResultForAllVector(listPoints[i]);
+                    WriteToResultTextBlock($"{Environment.NewLine}");
+                }
             }
 
             WriteToResultTextBlock($"First solution: ");
@@ -314,8 +316,10 @@ namespace ImprovedHarmonySearch
                     MessageBox.Show(OBJ_FUNC_WRONG);
                 }
 
-                             
-               GetMainViewModel().MyModel = new PlotModel();
+                if (decisionVariableQty != 2)
+                {
+                    GetMainViewModel().MyModel = new PlotModel();
+                } 
                 
             }
             else
