@@ -13,6 +13,11 @@
     <Grid>
         <TextBlock HorizontalAlignment="Left" Height="24" Margin="23,11,0,0" TextWrapping="Wrap" Text="Objective function f(x):" VerticalAlignment="Top" Width="267"/>
         <TextBox Margin="19,42,935,800" Text="(sin(x2*pi/3)^3)+(x1-3)/log10(21*e)" Name="objectiveFunction" RenderTransformOrigin="0.5,-1.464" LostFocus="lostFocusOnObjFunc"  />
+        <!--ComboBox Name="FunctionsToChoose_ComboBox" Margin="153,9,801,833" IsEditable="True" SelectedValuePath="Content" >
+            <ComboBoxItem LostFocus="ComboBoxItem_LostFocus"> </ComboBoxItem>
+            <ComboBoxItem Selected="ComboBoxItem_Selected">(sin(x2*pi/3)^3)+(x1-3)/log10(21*e)</ComboBoxItem>
+            <ComboBoxItem Selected="ComboBoxItem_Selected"> x1^2+x2^2-x2</ComboBoxItem>
+        </--> 
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="23,74,0,0" TextWrapping="Wrap" Text="Detected variables: " VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.494,3.227"/>
         <TextBlock HorizontalAlignment="Left" Height="29" Margin="129,74,0,0" TextWrapping="Wrap" Name="detectedVariables" VerticalAlignment="Top" Width="161"/>
         <TextBlock HorizontalAlignment="Left" Margin="42,112,0,0" TextWrapping="Wrap" Text="ParMin:" VerticalAlignment="Top"/>

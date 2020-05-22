@@ -49,24 +49,11 @@ namespace ImprovedHarmonySearch
 
         double[] xL;
         double[] xU;
-        double[][] HM;
-
-        double[] newImprovisedHarmony;
-        int gn = 0;
-        double PARgn;
-        double bwgn;
-        double c;
-        int D1;
-        double D2;
-        double D3;
-        double fx;
 
         TextBox[] minTextbox;
         TextBox[] maxTextbox;
         TextBlock[] descriptionTextblock;
-
-
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -132,8 +119,6 @@ namespace ImprovedHarmonySearch
         }
         private void DoSearchHarmonyOnClick(object sender, RoutedEventArgs e)
         {
-            //    Stopwatch sw = new Stopwatch();
-            //    sw.Start();
             int nrOfIterations = 10; //tu zmiana jesli wiecej wypisać iteracji 
 
             result.Text = string.Empty;
@@ -175,92 +160,85 @@ namespace ImprovedHarmonySearch
 
             if (decisionVariableQty == 2)
             {
-                try
+
+                var tmp = new PlotModel();
+
+                tmp.Axes.Add(new LinearColorAxis
                 {
-                    var tmp = new PlotModel();
+                    Position = AxisPosition.Right,
+                    Palette = OxyPalettes.Cool(200)
+                });
 
-                    tmp.Axes.Add(new LinearColorAxis
+                double tmpMaxValue = Double.MinValue;
+
+                var x1x1 = ArrayBuilder.CreateVector(xL[0], xU[0], 100);
+                var x2x2 = ArrayBuilder.CreateVector(xL[1], xU[1], 100);
+                double[,] peaksData = new double[x1x1.GetLength(0), x2x2.GetLength(0)];
+                double[] xy_tab = new double[2];
+
+                for (int i = 0; i < x1x1.GetLength(0); i++)
+                {
+                    for (int j = 0; j < x2x2.GetLength(0); j++)
                     {
-                        Position = AxisPosition.Right,
-                        Palette = OxyPalettes.Cool(200)
-                    });
-
-                    double tmpMaxValue = Double.MinValue;
-                    
-                    var x1x1 = ArrayBuilder.CreateVector(xL[0], xU[0], 100);
-                    var x2x2 = ArrayBuilder.CreateVector(xL[1], xU[1], 100);
-                    double[,] peaksData = new double[x1x1.GetLength(0), x2x2.GetLength(0)];
-                    double[] xy_tab = new double[2];
-
-                    for (int i = 0; i < x1x1.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < x2x2.GetLength(0); j++)
+                        xy_tab[0] = x1x1[i];
+                        xy_tab[1] = x2x2[j];
+                        peaksData[i, j] = function.calculate(xy_tab);
+                        if (peaksData[i, j] > tmpMaxValue)
                         {
-                            xy_tab[0] = x1x1[i];
-                            xy_tab[1] = x2x2[j];
-                            peaksData[i, j] = function.calculate(xy_tab);
-                            if (peaksData[i, j] > tmpMaxValue)
-                            {
-                                tmpMaxValue = peaksData[i, j];
-                            }
+                            tmpMaxValue = peaksData[i, j];
                         }
                     }
-
-                    var heatMapSeries = new HeatMapSeries
-                    {
-                        X0 = xL[0],
-                        X1 = xU[0],
-                        Y0 = xL[1],
-                        Y1 = xU[1],
-                        Interpolate = true,
-                        RenderMethod = HeatMapRenderMethod.Bitmap,
-                        Data = peaksData
-                    };
-                    tmp.Series.Add(heatMapSeries);
-
-                    var cs = new ContourSeries
-                    {
-                        Color = OxyColors.BlueViolet,
-                        LabelBackground = OxyColors.Transparent,
-                        ColumnCoordinates = x1x1,
-                        RowCoordinates = x2x2,
-                        Data = peaksData
-                    };
-                    tmp.Series.Add(cs);
-
-                    var path = new LineSeries
-                    {
-                        ItemsSource = ahs.GetDataPoints(),
-                        Color = OxyColors.Black,
-                        StrokeThickness = 2
-
-                    };
-                    tmp.Series.Add(path);
-
-                        var sc = new ScatterSeries
-                        {
-                            BinSize = 10,
-                            MarkerType = MarkerType.Cross,
-                            MarkerStrokeThickness = 3,
-
-                        };
-                       sc.Points.Add(new ScatterPoint(ahs.GetBestX1(), ahs.GetBestX2(), 5, tmpMaxValue));
-                        tmp.Series.Add(sc);
-
-                    GetMainViewModel().MyModel = tmp;
-
-
-
                 }
-                catch (Exception ex)
+
+                var heatMapSeries = new HeatMapSeries
                 {
+                    X0 = xL[0],
+                    X1 = xU[0],
+                    Y0 = xL[1],
+                    Y1 = xU[1],
+                    Interpolate = true,
+                    RenderMethod = HeatMapRenderMethod.Bitmap,
+                    Data = peaksData
+                };
+                tmp.Series.Add(heatMapSeries);
 
-                }
+                var cs = new ContourSeries
+                {
+                    Color = OxyColors.BlueViolet,
+                    LabelBackground = OxyColors.Transparent,
+                    ColumnCoordinates = x1x1,
+                    RowCoordinates = x2x2,
+                    Data = peaksData
+                };
+                tmp.Series.Add(cs);
+
+                var path = new LineSeries
+                {
+                    ItemsSource = ahs.GetDataPoints(),
+                    Color = OxyColors.Black,
+                    StrokeThickness = 2
+
+                };
+                tmp.Series.Add(path);
+
+                var sc = new ScatterSeries
+                {
+                    BinSize = 10,
+                    MarkerType = MarkerType.Cross,
+                    MarkerStrokeThickness = 3,
+
+                };
+                sc.Points.Add(new ScatterPoint(ahs.GetBestX1(), ahs.GetBestX2(), 5, tmpMaxValue));
+                tmp.Series.Add(sc);
+
+                GetMainViewModel().MyModel = tmp;
+
             }
-           
+
             CountBtn.IsEnabled = false;
 
         }
+
         public MainViewModel GetMainViewModel()
         {
             return (MainViewModel)DataContext;
@@ -319,8 +297,8 @@ namespace ImprovedHarmonySearch
                 if (decisionVariableQty != 2)
                 {
                     GetMainViewModel().MyModel = new PlotModel();
-                } 
-                
+                }
+
             }
             else
             {
