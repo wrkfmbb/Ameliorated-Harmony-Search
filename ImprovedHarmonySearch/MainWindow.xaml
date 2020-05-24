@@ -21,7 +21,7 @@
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="23,74,0,0" TextWrapping="Wrap" Text="Detected variables: " VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.494,3.227"/>
         <TextBlock HorizontalAlignment="Left" Height="29" Margin="129,74,0,0" TextWrapping="Wrap" Name="detectedVariables" VerticalAlignment="Top" Width="161"/>
         <TextBlock HorizontalAlignment="Left" Margin="42,112,0,0" TextWrapping="Wrap" Text="ParMin:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="99,106,0,0" TextWrapping="Wrap" Name="parMin" VerticalAlignment="Top" Width="42" Height="28" Text="0.2"/>
+        <TextBox HorizontalAlignment="Left" Margin="99,106,0,0" TextWrapping="Wrap" Name="parMin" VerticalAlignment="Top" Width="42" Height="28" Text="0.2" />
         <TextBlock HorizontalAlignment="Left" Margin="42,146,0,0" TextWrapping="Wrap" Text="ParMax:" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="99,140,0,0" TextWrapping="Wrap" Name="parMax" VerticalAlignment="Top" Width="42" Height="28" Text="0.8"/>
         <TextBlock HorizontalAlignment="Left" Margin="162,112,0,0" TextWrapping="Wrap" Text="bwMin:" VerticalAlignment="Top" Width="41"/>

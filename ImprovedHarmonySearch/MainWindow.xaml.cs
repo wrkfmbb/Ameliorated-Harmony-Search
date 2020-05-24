@@ -324,14 +324,36 @@ namespace ImprovedHarmonySearch
 
         private void SaveParametersOnclick(object sender, RoutedEventArgs e)
         {
+
+            if (double.Parse(parMax.Text) >= 0 && double.Parse(parMax.Text) <= 1) parMax.Background = Brushes.White; //Brushes.Red;
+            if (double.Parse(parMin.Text) >= 0 && double.Parse(parMin.Text) <= 1) parMin.Background = Brushes.White;
+            if (double.Parse(parMin.Text) <= double.Parse(parMax.Text)) { parMin.Background = Brushes.White; parMax.Background = Brushes.White; }
+            if (double.Parse(HMCR.Text) >= 0 && double.Parse(HMCR.Text) <= 1) HMCR.Background = Brushes.White;
+            if (double.Parse(bwMin.Text) >= 0 && double.Parse(bwMax.Text) >= 0) { bwMin.Background = Brushes.White; bwMax.Background = Brushes.White; }
+            if (double.Parse(bwMin.Text) <= double.Parse(bwMax.Text)) { bwMin.Background = Brushes.White; bwMax.Background = Brushes.White; }
+            if (int.Parse(Ni.Text) > 0) Ni.Background = Brushes.White;
+            if (int.Parse(hms.Text) > 0) hms.Background = Brushes.White;
+
             if (CheckParameters() == true)
             {
+               
+               
                 CountBtn.IsEnabled = true;
                 InitializeParameters();
             }
             else
             {
+                if (double.Parse(parMax.Text) < 0 || double.Parse(parMax.Text) > 1) parMax.Background = Brushes.LightCoral; //Brushes.Red;
+                if (double.Parse(parMin.Text) < 0 || double.Parse(parMin.Text) > 1) parMin.Background = Brushes.LightCoral;
+                if (double.Parse(parMin.Text) > double.Parse(parMax.Text)) { parMin.Background = Brushes.LightCoral; parMax.Background = Brushes.LightCoral; }
+                if(double.Parse(HMCR.Text) < 0 || double.Parse(HMCR.Text) > 1) HMCR.Background = Brushes.LightCoral;
+                if (double.Parse(bwMin.Text) < 0 || double.Parse(bwMax.Text) < 0) { bwMin.Background = Brushes.LightCoral; bwMax.Background = Brushes.LightCoral; }
+                if(double.Parse(bwMin.Text) > double.Parse(bwMax.Text)) { bwMin.Background = Brushes.LightCoral; bwMax.Background = Brushes.LightCoral; }
+                if( int.Parse(Ni.Text) <= 0) Ni.Background = Brushes.LightCoral;
+                if (int.Parse(hms.Text) <= 0) hms.Background = Brushes.LightCoral;
+                if( !CheckMinMaxX()) MessageBox.Show("Min cannot be bigger than max");
                 MessageBox.Show(WRONG_PARAMETERS);
+
 
             }
         }
